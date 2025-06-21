@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CleanCape - Premium Cleaning Marketplace</title>
+  <meta name="description" content="Book trusted cleaning professionals in Cape Town with verified reviews and premium services">
+  
+  <!-- Preconnect to external resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="bounce-ball"></div>
+      <div class="text">Cleaning Up</div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sticky-nav" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="#home" class="logo">
+        <i class="fas fa-broom" aria-hidden="true"></i> 
+        <span>CleanCape</span>
+      </a>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </button>
+      
+      <div class="nav-links">
+        <a href="#home" class="active"><i class="fas fa-home" aria-hidden="true"></i> <span>Home</span></a>
+        <a href="#vendors"><i class="fas fa-store" aria-hidden="true"></i> <span>Vendors</span></a>
+        <a href="#how-it-works"><i class="fas fa-info-circle" aria-hidden="true"></i> <span>How It Works</span></a>
+        <a href="#testimonials"><i class="fas fa-quote-left" aria-hidden="true"></i> <span>Testimonials</span></a>
+        
+        <!-- Auth Buttons - Will change based on login state -->
+        <div class="auth-buttons" id="authButtons">
+          <button class="cta-button demo-login" onclick="demoLogin('user')" aria-label="Demo user login">
+            <i class="fas fa-user" aria-hidden="true"></i> <span>Demo User</span>
+          </button>
+          <button class="cta-button demo-login" onclick="demoLogin('vendor')" aria-label="Demo vendor login">
+            <i class="fas fa-store" aria-hidden="true"></i> <span>Demo Vendor</span>
+          </button>
+          <button class="cta-button signup" onclick="openAuthModal('signup', 'user')" aria-label="Sign up">
+            <i class="fas fa-user-plus" aria-hidden="true"></i> <span>Sign Up</span>
+          </button>
+          <button class="cta-button login" onclick="openAuthModal('login', 'user')" aria-label="Login">
+            <i class="fas fa-sign-in-alt" aria-hidden="true"></i> <span>Login</span>
+          </button>
+        </div>
+        
+        <!-- Logged In User Menu - Hidden by default -->
+        <div class="user-menu" id="userMenu" style="display: none;">
+          <div class="user-profile">
+            <img id="userAvatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="User profile" width="40" height="40">
+            <span id="userGreeting">Welcome, User</span>
+            <button class="logout-btn" onclick="logout()" aria-label="Logout">
+              <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-bg" role="img" aria-label="Clean home background"></div>
+    <div class="hero-content">
+      <h1 class="animate__animated animate__fadeInDown">Sparkling Clean Spaces in <span>Cape Town</span></h1>
+      <p class="animate__animated animate__fadeIn animate__delay-1s">Book trusted cleaning professionals with verified reviews</p>
+      
+      <form class="hero-search animate__animated animate__fadeIn animate__delay-1s" role="search">
+        <div class="search-input">
+          <label for="serviceSearch" class="sr-only">Search services</label>
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <input type="text" id="serviceSearch" placeholder="What service do you need?" aria-label="Search services">
+        </div>
+        <div class="select-wrapper">
+          <label for="areaSelect" class="sr-only">Select area</label>
+          <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+          <select id="areaSelect" aria-label="Select Area">
+            <option value="">Select Area</option>
+            <option value="city-bowl">City Bowl</option>
+            <option value="atlantic-seaboard">Atlantic Seaboard</option>
+            <option value="southern-suburbs">Southern Suburbs</option>
+            <option value="northern-suburbs">Northern Suburbs</option>
+            <option value="west-coast">West Coast</option>
+          </select>
+        </div>
+        <button type="submit" class="cta-button search-btn">
+          <i class="fas fa-search" aria-hidden="true"></i> <span>Search Now</span>
+        </button>
+      </form>
+      
+      <div class="hero-stats animate__animated animate__fadeIn animate__delay-2s">
+        <div class="stat-item">
+          <div class="stat-number" data-count="1250">0</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="320">0</div>
+          <div class="stat-label">Trusted Vendors</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="98">0</div>
+          <div class="stat-label">% Satisfaction</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="scroll-down" aria-hidden="true">
+      <div class="mouse">
+        <div class="wheel"></div>
+      </div>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="wave-top" aria-hidden="true"></div>
+    <div class="section-container">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>Simple steps to book your cleaning service</p>
+      </div>
+      
+      <div class="steps-container">
+        <div class="step animate__animated animate__fadeInUp">
+          <div class="step-icon">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <div class="step-number">1</div>
+          </div>
+          <h3>Search</h3>
+          <p>Find the perfect cleaning service provider in your area from our verified professionals.</p>
+        </div>
+        
+        <div class="step animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="step-icon">
+            <i class="fas fa-calendar-check" aria-hidden="true"></i>
+            <div class="step-number">2</div>
+          </div>
+          <h3>Book</h3>
+          <p>Choose a date and time that works for you with our easy scheduling system.</p>
+        </div>
+        
+        <div class="step animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="step-icon">
+            <i class="fas fa-sparkles" aria-hidden="true"></i>
+            <div class="step-number">3</div>
+          </div>
+          <h3>Relax</h3>
+          <p>Sit back and enjoy a spotless space with our satisfaction guarantee.</p>
+        </div>
+      </div>
+    </div>
+    <div class="wave-bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- Vendors Section -->
+  <section id="vendors" class="vendors-grid">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>Top-Rated Service Providers</h2>
+        <p>Trusted professionals in your area</p>
+      </div>
+      
+      <div class="filter-buttons" role="tablist">
+        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All Services</button>
+        <button class="filter-btn" data-filter="home" role="tab" aria-selected="false"><i class="fas fa-home" aria-hidden="true"></i> Home Cleaning</button>
+        <button class="filter-btn" data-filter="office" role="tab" aria-selected="false"><i class="fas fa-building" aria-hidden="true"></i> Office Cleaning</button>
+        <button class="filter-btn" data-filter="vehicle" role="tab" aria-selected="false"><i class="fas fa-car" aria-hidden="true"></i> Vehicle Cleaning</button>
+        <button class="filter-btn" data-filter="deep" role="tab" aria-selected="false"><i class="fas fa-broom" aria-hidden="true"></i> Deep Cleaning</button>
+      </div>
+      
+      <div class="vendors-container" id="vendorsContainer">
+        <!-- Vendor cards will be dynamically populated -->
+        <div class="vendor-card" data-category="home">
+          <div class="vendor-image">
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="CleanPro Services" width="400" height="300">
+            <div class="rating-badge">
+              <i class="fas fa-star" aria-hidden="true"></i> 4.9
+            </div>
+          </div>
+          <div class="vendor-info">
+            <h3>CleanPro Services</h3>
+            <div class="vendor-meta">
+              <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> City Bowl</span>
+              <span><i class="fas fa-clock" aria-hidden="true"></i> 5+ years experience</span>
+            </div>
+            <p>Professional home cleaning with eco-friendly products. Specializing in deep cleaning and move-in/move-out services.</p>
+            <div class="vendor-footer">
+              <span class="price">From R250</span>
+              <button class="cta-button outline" onclick="openModal('bookingModal')">Book Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="vendor-card" data-category="office">
+          <div class="vendor-image">
+            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="OfficeClean Solutions" width="400" height="300">
+            <div class="rating-badge">
+              <i class="fas fa-star" aria-hidden="true"></i> 4.8
+            </div>
+          </div>
+          <div class="vendor-info">
+            <h3>OfficeClean Solutions</h3>
+            <div class="vendor-meta">
+              <span><i class="fas fa-map-marker-alt" aria-hidden="true"></i> City Bowl & Surrounds</span>
+              <span><i class="fas fa-clock" aria-hidden="true"></i> 8+ years experience</span>
+            </div>
+            <p>Commercial cleaning specialists offering daily, weekly, and monthly office cleaning packages.</p>
+            <div class="vendor-footer">
+              <span class="price">From R350</span>
+              <button class="cta-button outline" onclick="openModal('bookingModal')">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="view-all">
+        <button class="cta-button outline">
+          <span>View All 320 Vendors</span> <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>What Our Clients Say</h2>
+        <p>Trusted by thousands of happy customers</p>
+      </div>
+      
+      <div class="testimonials-slider">
+        <div class="testimonial-card active">
+          <div class="quote-icon"><i class="fas fa-quote-left" aria-hidden="true"></i></div>
+          <p class="testimonial-text">CleanCape saved me so much time! The cleaners were professional and thorough. My apartment has never been cleaner. I especially appreciated their attention to detail in the kitchen and bathroom.</p>
+          <div class="client-info">
+            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah J." width="60" height="60">
+            <div>
+              <h4>Sarah J.</h4>
+              <div class="rating">
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+              </div>
+              <div class="location">Cape Town CBD</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class="fas fa-quote-left" aria-hidden="true"></i></div>
+          <p class="testimonial-text">As a busy professional, I don't have time to clean. CleanCape connects me with reliable cleaners who do an amazing job every time. The app makes scheduling so easy and the cleaners always arrive on time.</p>
+          <div class="client-info">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David M." width="60" height="60">
+            <div>
+              <h4>David M.</h4>
+              <div class="rating">
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+              </div>
+              <div class="location">Sea Point</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class="fas fa-quote-left" aria-hidden="true"></i></div>
+          <p class="testimonial-text">I've been using CleanCape for my office cleaning needs for over a year now. Consistent quality and great service! The team is flexible with our changing office hours and always leaves the place spotless.</p>
+          <div class="client-info">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Lisa T." width="60" height="60">
+            <div>
+              <h4>Lisa T.</h4>
+              <div class="rating">
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <i class="fas fa-star" aria-hidden="true"></i>
+              </div>
+              <div class="location">Claremont</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="slider-controls">
+          <button class="slider-prev" aria-label="Previous testimonial"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+          <div class="slider-dots">
+            <span class="dot active" aria-label="Testimonial 1"></span>
+            <span class="dot" aria-label="Testimonial 2"></span>
+            <span class="dot" aria-label="Testimonial 3"></span>
+          </div>
+          <button class="slider-next" aria-label="Next testimonial"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-container">
+      <div class="cta-content">
+        <h2>Ready for a Spotless Space?</h2>
+        <p>Join thousands of satisfied customers who trust CleanCape for their cleaning needs. Get your first clean at 20% off!</p>
+        <button class="cta-button" onclick="openAuthModal('signup', 'user')">
+          <i class="fas fa-user-plus" aria-hidden="true"></i> <span>Get Started Now</span>
+        </button>
+      </div>
+      <div class="cta-image">
+        <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Clean living room" width="600" height="400">
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Modal -->
+  <div class="modal" id="bookingModal" aria-hidden="true">
+    <div class="modal-overlay" onclick="closeModal('bookingModal')"></div>
+    <div class="modal-content">
+      <button class="close" onclick="closeModal('bookingModal')" aria-label="Close booking modal">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+      <div class="modal-header">
+        <h2><i class="fas fa-broom" aria-hidden="true"></i> Book a Cleaning Service</h2>
+        <p>Fill out the form below to schedule your cleaning</p>
+      </div>
+      <form id="bookingForm">
+        <div class="form-group">
+          <label for="bookingTitle"><i class="fas fa-broom" aria-hidden="true"></i> Service Type</label>
+          <select id="bookingTitle" name="title" required>
+            <option value="">Select a service</option>
+            <option value="Standard Cleaning">Standard Cleaning</option>
+            <option value="Deep Cleaning">Deep Cleaning</option>
+            <option value="Office Cleaning">Office Cleaning</option>
+            <option value="Move In/Out Cleaning">Move In/Out Cleaning</option>
+            <option value="Carpet Cleaning">Carpet Cleaning</option>
+          </select>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date"><i class="fas fa-calendar-day" aria-hidden="true"></i> Date</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+          <div class="form-group">
+            <label for="time"><i class="fas fa-clock" aria-hidden="true"></i> Time</label>
+            <select id="time" name="time" required>
+              <option value="">Select time</option>
+              <option value="08:00">8:00 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="16:00">4:00 PM</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="propertySize"><i class="fas fa-ruler-combined" aria-hidden="true"></i> Property Size</label>
+          <select id="propertySize" name="propertySize" required>
+            <option value="">Select size</option>
+            <option value="small">Small (1-2 bedrooms)</option>
+            <option value="medium">Medium (3 bedrooms)</option>
+            <option value="large">Large (4+ bedrooms)</option>
+            <option value="extra-large">Extra Large (5+ bedrooms)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="details"><i class="fas fa-info-circle" aria-hidden="true"></i> Special Instructions</label>
+          <textarea id="details" name="details" placeholder="Any special requests or details about your space" rows="4"></textarea>
+        </div>
+        
+        <div class="form-footer">
+          <div class="price-estimate">
+            <span>Estimated Price:</span>
+            <span class="price">R450 - R600</span>
+          </div>
+          <button type="submit" class="cta-button">
+            <i class="fas fa-check-circle" aria-hidden="true"></i> <span>Confirm Booking</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Booking Details Modal -->
+  <div class="modal" id="bookingDetailsModal" aria-hidden="true">
+    <div class="modal-overlay" onclick="closeModal('bookingDetailsModal')"></div>
+    <div class="modal-content">
+      <button class="close" onclick="closeModal('bookingDetailsModal')" aria-label="Close booking details modal">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+      <div class="modal-header">
+        <h2><i class="fas fa-calendar-check" aria-hidden="true"></i> Booking Confirmation</h2>
+        <p>Your cleaning service has been scheduled</p>
+      </div>
+      <div id="bookingDetailsContent">
+        <!-- Will be populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- User Dashboard (Hidden by default) -->
+  <section id="userDashboard" class="dashboard" style="display: none;">
+    <div class="dashboard-header">
+      <h2><i class="fas fa-user" aria-hidden="true"></i> My Dashboard</h2>
+      <div class="user-profile">
+        <img id="dashboardUserAvatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="User profile" width="60" height="60">
+        <div>
+          <span id="dashboardUserName">Welcome back, <strong>Sarah Johnson</strong>!</span>
+          <div class="member-since">Member since June 2023</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="dashboard-actions">
+      <button class="action-btn" onclick="openModal('bookingModal')">
+        <i class="fas fa-plus" aria-hidden="true"></i> New Booking
+      </button>
+      <button class="action-btn" onclick="showUserProfile()">
+        <i class="fas fa-user-edit" aria-hidden="true"></i> Edit Profile
+      </button>
+      <button class="action-btn" onclick="showPaymentSection()">
+        <i class="fas fa-credit-card" aria-hidden="true"></i> Payment Methods
+      </button>
+    </div>
+    
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="showTab('user-all')" role="tab" aria-selected="true">
+        <i class="fas fa-history" aria-hidden="true"></i> <span>All Bookings</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('user-upcoming')" role="tab" aria-selected="false">
+        <i class="fas fa-calendar-alt" aria-hidden="true"></i> <span>Upcoming</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('user-pending')" role="tab" aria-selected="false">
+        <i class="fas fa-hourglass-half" aria-hidden="true"></i> <span>Pending</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('user-completed')" role="tab" aria-selected="false">
+        <i class="fas fa-check-circle" aria-hidden="true"></i> <span>Completed</span>
+      </button>
+    </div>
+    
+    <div class="dashboard-content">
+      <div id="user-all" class="tab-content active" role="tabpanel">
+        <!-- Will be populated dynamically -->
+      </div>
+      <div id="user-upcoming" class="tab-content" role="tabpanel">
+        <!-- Will be populated dynamically -->
+      </div>
+      <div id="user-pending" class="tab-content" role="tabpanel">
+        <!-- Will be populated dynamically -->
+      </div>
+      <div id="user-completed" class="tab-content" role="tabpanel">
+        <!-- Will be populated dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Vendor Dashboard (Hidden by default) -->
+  <section id="vendorDashboard" class="dashboard" style="display: none;">
+    <div class="dashboard-header">
+      <h2><i class="fas fa-store" aria-hidden="true"></i> Vendor Dashboard</h2>
+      <div class="user-profile">
+        <img id="dashboardVendorAvatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Vendor profile" width="60" height="60">
+        <div>
+          <span id="dashboardVendorName">Welcome back, <strong>CleanPro Services</strong>!</span>
+          <div class="member-since">Member since January 2023</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="dashboard-stats">
+      <div class="stat-card">
+        <div class="stat-value">24</div>
+        <div class="stat-label">Upcoming Jobs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">4.9</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">R18,450</div>
+        <div class="stat-label">Earnings This Month</div>
+      </div>
+    </div>
+    
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="showTab('vendor-all')" role="tab" aria-selected="true">
+        <i class="fas fa-calendar-check" aria-hidden="true"></i> <span>All Bookings</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('vendor-upcoming')" role="tab" aria-selected="false">
+        <i class="fas fa-calendar-alt" aria-hidden="true"></i> <span>Upcoming</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('vendor-pending')" role="tab" aria-selected="false">
+        <i class="fas fa-hourglass-half" aria-hidden="true"></i> <span>Pending</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('vendor-completed')" role="tab" aria-selected="false">
+        <i class="fas fa-check-circle" aria-hidden="true"></i> <span>Completed</span>
+      </button>
+      <button class="tab-btn" onclick="showTab('vendor-requests')" role="tab" aria-selected="false">
+        <i class="fas fa-inbox" aria-hidden="true"></i> <span>Requests</span>
+      </button>
+    </div>
+    
+    <div class="dashboard-content">
+      <div id="vendor-all" class="tab-content active" role="tabpanel">
+        <!-- Will be populated dynamically -->
+      </div>
+      <div id="vendor-upcoming" class="tab-content" role="tabpanel">
+        <!-- Will be populated dynamically -->
+      </div>
+      <div id="vendor-pending" class="tab-content" role="tabpanel">
+        <!-- Will be populated dynamically -->
+      </div>
+      <div id="vendor-completed" class="tab-content" role="tabpanel">
+        <!-- Will be populated dynamically -->
+      </div>
+      <div id="vendor-requests" class="tab-content" role="tabpanel">
+        <!-- Will be populated dynamically -->
+      </div>
+    </div>
+    
+    <section id="vendorProfileUpdate" aria-label="Vendor Profile Update">
+      <h3><i class="fas fa-store" aria-hidden="true"></i> Business Profile</h3>
+      <form id="vendorProfileForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vendorCompanyName"><i class="fas fa-building" aria-hidden="true"></i> Company Name</label>
+            <input type="text" id="vendorCompanyName" name="companyName" placeholder="Enter your company name" value="CleanPro Services" required>
+          </div>
+          <div class="form-group">
+            <label for="vendorPhone"><i class="fas fa-phone" aria-hidden="true"></i> Phone Number</label>
+            <input type="tel" id="vendorPhone" name="phone" placeholder="Enter your phone number" value="+27 76 123 4567" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="vendorCompanyDescription"><i class="fas fa-info-circle" aria-hidden="true"></i> Company Description</label>
+          <textarea id="vendorCompanyDescription" name="description" placeholder="Describe your company and services" required>Professional cleaning service with 5 years experience in Cape Town. Specializing in residential and office cleaning with eco-friendly products.</textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="vendorServices"><i class="fas fa-concierge-bell" aria-hidden="true"></i> Services Offered</label>
+          <div class="services-tags">
+            <span class="service-tag active">Home Cleaning</span>
+            <span class="service-tag active">Office Cleaning</span>
+            <span class="service-tag">Deep Cleaning</span>
+            <span class="service-tag">Carpet Cleaning</span>
+            <span class="service-tag">Window Cleaning</span>
+            <span class="service-tag">Move In/Out</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="vendorAreas"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Service Areas</label>
+          <div class="areas-tags">
+            <span class="area-tag active">City Bowl</span>
+            <span class="area-tag active">Atlantic Seaboard</span>
+            <span class="area-tag">Southern Suburbs</span>
+            <span class="area-tag">Northern Suburbs</span>
+            <span class="area-tag">West Coast</span>
+          </div>
+        </div>
+        
+        <div class="form-footer">
+          <button type="submit" class="cta-button">
+            <i class="fas fa-save" aria-hidden="true"></i> <span>Update Profile</span>
+          </button>
+        </div>
+      </form>
+    </section>
+  </section>
+
+  <!-- User Profile Update Modal -->
+  <div class="modal" id="userProfileModal" aria-hidden="true">
+    <div class="modal-overlay" onclick="closeModal('userProfileModal')"></div>
+    <div class="modal-content">
+      <button class="close" onclick="closeModal('userProfileModal')" aria-label="Close profile modal">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+      <div class="modal-header">
+        <h2><i class="fas fa-user-edit" aria-hidden="true"></i> Update Profile</h2>
+        <p>Keep your information up to date</p>
+      </div>
+      <form id="userProfileForm">
+        <div class="form-group">
+          <label for="userAvatar">Profile Picture</label>
+          <div class="avatar-upload">
+            <img id="userAvatarPreview" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile preview" width="100" height="100">
+            <label for="userAvatar" class="upload-btn">
+              <i class="fas fa-camera" aria-hidden="true"></i> Change Photo
+            </label>
+            <input type="file" id="userAvatar" name="avatar" accept="image/*" style="display: none;">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="userName"><i class="fas fa-user" aria-hidden="true"></i> Full Name</label>
+            <input type="text" id="userName" name="name" placeholder="Enter your full name" value="Sarah Johnson" required>
+          </div>
+          <div class="form-group">
+            <label for="userPhone"><i class="fas fa-phone" aria-hidden="true"></i> Phone Number</label>
+            <input type="tel" id="userPhone" name="phone" placeholder="Enter your phone number" value="+27 83 456 7890" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="userEmail"><i class="fas fa-envelope" aria-hidden="true"></i> Email</label>
+          <input type="email" id="userEmail" name="email" placeholder="Enter your email" value="sarah.johnson@example.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="userAddress"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Address</label>
+          <textarea id="userAddress" name="address" placeholder="Enter your address" rows="2">12 Kloof Street, Gardens, Cape Town</textarea>
+        </div>
+        
+        <div class="form-footer">
+          <button type="submit" class="cta-button">
+            <i class="fas fa-save" aria-hidden="true"></i> <span>Save Changes</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="modal" id="paymentModal" aria-hidden="true">
+    <div class="modal-overlay" onclick="closeModal('paymentModal')"></div>
+    <div class="modal-content">
+      <button class="close" onclick="closeModal('paymentModal')" aria-label="Close payment modal">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+      <div class="modal-header">
+        <h2><i class="fas fa-credit-card" aria-hidden="true"></i> Payment Methods</h2>
+        <p>Manage your payment options</p>
+      </div>
+      
+      <div class="payment-methods">
+        <div class="payment-card active">
+          <div class="card-brand">
+            <i class="fab fa-cc-visa" aria-hidden="true"></i>
+            <span>Visa</span>
+          </div>
+          <div class="card-number">•••• •••• •••• 4242</div>
+          <div class="card-expiry">Expires 04/25</div>
+          <button class="card-remove" aria-label="Remove card">
+            <i class="fas fa-trash" aria-hidden="true"></i>
+          </button>
+        </div>
+        
+        <div class="payment-card">
+          <div class="card-brand">
+            <i class="fab fa-cc-mastercard" aria-hidden="true"></i>
+            <span>Mastercard</span>
+          </div>
+          <div class="card-number">•••• •••• •••• 5555</div>
+          <div class="card-expiry">Expires 08/24</div>
+          <button class="card-remove" aria-label="Remove card">
+            <i class="fas fa-trash" aria-hidden="true"></i>
+          </button>
+        </div>
+        
+        <button class="add-payment-btn" onclick="togglePaymentForm()">
+          <i class="fas fa-plus" aria-hidden="true"></i> Add New Payment Method
+        </button>
+      </div>
+      
+      <form id="paymentForm" style="display: none;">
+        <div class="form-group">
+          <label for="cardNumber"><i class="fas fa-credit-card" aria-hidden="true"></i> Card Number</label>
+          <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="expiry"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Expiry Date</label>
+            <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required>
+          </div>
+          <div class="form-group">
+            <label for="cvv"><i class="fas fa-lock" aria-hidden="true"></i> CVV</label>
+            <input type="text" id="cvv" name="cvv" placeholder="123" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="cardName"><i class="fas fa-user" aria-hidden="true"></i> Name on Card</label>
+          <input type="text" id="cardName" name="cardName" placeholder="Name as it appears on card" required>
+        </div>
+        
+        <div class="form-footer">
+          <button type="button" class="cta-button outline" onclick="togglePaymentForm()">
+            Cancel
+          </button>
+          <button type="submit" class="cta-button">
+            <i class="fas fa-save" aria-hidden="true"></i> Save Card
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal" id="authModal" aria-hidden="true">
+    <div class="modal-overlay" onclick="closeAuthModal()"></div>
+    <div class="modal-content">
+      <button class="close" onclick="closeAuthModal()" aria-label="Close authentication modal">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+      
+      <div class="auth-header">
+        <div class="auth-tabs" role="tablist">
+          <button class="active" onclick="switchAuthType('user')" role="tab" aria-selected="true">
+            <i class="fas fa-user" aria-hidden="true"></i> <span>User</span>
+          </button>
+          <button onclick="switchAuthType('vendor')" role="tab" aria-selected="false">
+            <i class="fas fa-store" aria-hidden="true"></i> <span>Vendor</span>
+          </button>
+        </div>
+        <h2 id="authModalTitle"><i class="fas fa-sign-in-alt" aria-hidden="true"></i> Login</h2>
+      </div>
+      
+      <div class="scrollable-form">
+        <form id="authForm">
+          <div class="form-toggle" role="tablist">
+            <button type="button" class="active" onclick="toggleAuthMode('login')" role="tab" aria-selected="true">
+              <i class="fas fa-sign-in-alt" aria-hidden="true"></i> <span>Login</span>
+            </button>
+            <button type="button" onclick="toggleAuthMode('signup')" role="tab" aria-selected="false">
+              <i class="fas fa-user-plus" aria-hidden="true"></i> <span>Sign Up</span>
+            </button>
+          </div>
+          
+          <div class="social-login">
+            <button type="button" class="social-btn google">
+              <i class="fab fa-google" aria-hidden="true"></i> Continue with Google
+            </button>
+            <button type="button" class="social-btn facebook">
+              <i class="fab fa-facebook-f" aria-hidden="true"></i> Continue with Facebook
+            </button>
+          </div>
+          
+          <div class="divider">
+            <span>or</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="authEmail"><i class="fas fa-envelope" aria-hidden="true"></i> Email</label>
+            <input type="email" id="authEmail" name="email" placeholder="Enter your email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="authPassword"><i class="fas fa-lock" aria-hidden="true"></i> Password</label>
+            <div class="password-input">
+              <input type="password" id="authPassword" name="password" placeholder="Enter your password" required>
+              <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                <i class="fas fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div id="signupFields" style="display: none;">
+            <div class="form-group">
+              <label for="authName"><i class="fas fa-user" aria-hidden="true"></i> Full Name</label>
+              <input type="text" id="authName" name="name" placeholder="Enter your full name">
+            </div>
+            
+            <div id="vendorSignupFields" style="display: none;">
+              <div class="form-group">
+                <label for="companyName"><i class="fas fa-building" aria-hidden="true"></i> Company Name</label>
+                <input type="text" id="companyName" name="companyName" placeholder="Enter your company name">
+              </div>
+              <div class="form-group">
+                <label for="phoneNumber"><i class="fas fa-phone" aria-hidden="true"></i> Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phone" placeholder="Enter your phone number">
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-footer">
+            <button type="submit" class="cta-button">
+              <span id="authSubmitText">Login</span> <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </form>
+        
+        <div class="auth-footer">
+          <p id="authToggleText">
+            Don't have an account? <a href="#" onclick="toggleAuthForm('signup', currentUserType || 'user')">Sign up</a>
+          </p>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <div class="logo">
+          <i class="fas fa-broom" aria-hidden="true"></i> CleanCape
+        </div>
+        <p>Premium cleaning services in Cape Town</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-home" aria-hidden="true"></i> Home Cleaning</a></li>
+            <li><a href="#"><i class="fas fa-building" aria-hidden="true"></i> Office Cleaning</a></li>
+            <li><a href="#"><i class="fas fa-broom" aria-hidden="true"></i> Deep Cleaning</a></li>
+            <li><a href="#"><i class="fas fa-truck-moving" aria-hidden="true"></i> Move In/Out</a></li>
+            <li><a href="#"><i class="fas fa-car" aria-hidden="true"></i> Vehicle Cleaning</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-info-circle" aria-hidden="true"></i> About Us</a></li>
+            <li><a href="#"><i class="fas fa-question-circle" aria-hidden="true"></i> How It Works</a></li>
+            <li><a href="#"><i class="fas fa-briefcase" aria-hidden="true"></i> Careers</a></li>
+            <li><a href="#"><i class="fas fa-envelope" aria-hidden="true"></i> Contact</a></li>
+            <li><a href="#"><i class="fas fa-newspaper" aria-hidden="true"></i> Blog</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-question" aria-hidden="true"></i> Help Center</a></li>
+            <li><a href="#"><i class="fas fa-file-alt" aria-hidden="true"></i> Terms of Service</a></li>
+            <li><a href="#"><i class="fas fa-shield-alt" aria-hidden="true"></i> Privacy Policy</a></li>
+            <li><a href="#"><i class="fas fa-comments" aria-hidden="true"></i> FAQ</a></li>
+            <li><a href="tel:+27211234567"><i class="fas fa-phone-alt" aria-hidden="true"></i> +27 21 123 4567</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Newsletter</h4>
+          <p>Subscribe to get updates and cleaning tips</p>
+          <form class="newsletter-form">
+            <label for="newsletterEmail" class="sr-only">Email address</label>
+            <input type="email" id="newsletterEmail" placeholder="Your email address" required>
+            <button type="submit" class="cta-button">
+              <i class="fas fa-paper-plane" aria-hidden="true"></i> Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        <p>© 2023 CleanCape. All rights reserved. Proudly serving Cape Town.</p>
+        <div class="footer-payments">
+          <i class="fab fa-cc-visa" aria-hidden="true"></i>
+          <i class="fab fa-cc-mastercard" aria-hidden="true"></i>
+          <i class="fab fa-cc-amex" aria-hidden="true"></i>
+          <i class="fab fa-cc-paypal" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Logged-in Footer Menu -->
+  <footer class="loggedin-footer" style="display: none;">
+    <div class="footer-menu user-menu">
+      <button onclick="showTab('user-all')" class="active" aria-label="Bookings">
+        <i class="fas fa-history" aria-hidden="true"></i>
+        <span>Bookings</span>
+      </button>
+      <button onclick="openModal('bookingModal')" aria-label="New booking">
+        <i class="fas fa-plus-circle" aria-hidden="true"></i>
+        <span>New Booking</span>
+      </button>
+      <button onclick="showUserProfile()" aria-label="Profile">
+        <i class="fas fa-user" aria-hidden="true"></i>
+        <span>Profile</span>
+      </button>
+      <button onclick="showPaymentSection()" aria-label="Wallet">
+        <i class="fas fa-wallet" aria-hidden="true"></i>
+        <span>Wallet</span>
+      </button>
+    </div>
+    
+    <div class="footer-menu vendor-menu" style="display: none;">
+      <button onclick="showTab('vendor-all')" class="active" aria-label="Bookings">
+        <i class="fas fa-calendar-check" aria-hidden="true"></i>
+        <span>Bookings</span>
+      </button>
+      <button onclick="showTab('vendor-requests')" aria-label="Requests">
+        <i class="fas fa-inbox" aria-hidden="true"></i>
+        <span>Requests</span>
+      </button>
+      <button onclick="showVendorProfile()" aria-label="Business">
+        <i class="fas fa-store" aria-hidden="true"></i>
+        <span>Business</span>
+      </button>
+      <button onclick="showServices()" aria-label="Services">
+        <i class="fas fa-concierge-bell" aria-hidden="true"></i>
+        <span>Services</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
